@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cansu'ya Özel 🕷️</title>
+    
+    <!-- Yazı Tipleri -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght=600;700&family=Poppins:wght=300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================
+                   GENEL SIFIRLAMA VE ZEMİN
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: 
+                linear-gradient(rgba(0,0,0,.85), rgba(0,0,0,.95)),
+                url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=1200&auto=format&fit=crop') center/cover fixed;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            color: white;
+            padding: 12px;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(255, 0, 0, 0.15), transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(200, 0, 0, 0.08), transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(150, 0, 0, 0.08), transparent 40%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ============================================
+               🔒 HAVALI OSCORP SİBER KİLİT EKRANI
+           ============================================ */
+        #kilitEkrani {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #050000 0%, #120101 50%, #000000 100%);
+            z-index: 999999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1), opacity 1s ease;
+        }
+
+        .kilit-panel {
+            background: rgba(10, 5, 5, 0.75);
+            border: 2px solid #ff1a1a;
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.25), inset 0 0 20px rgba(255, 0, 0, 0.15);
+            border-radius: 24px;
+            padding: 40px 30px;
+            max-width: 450px;
+            width: 100%;
+            position: relative;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .kilit-panel::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.1), transparent);
+            animation: kilitTarama 2.5s linear infinite;
+        }
+        @keyframes kilitTarama { 0% { left: -100%; } 100% { left: 150%; } }
+
+        .kilit-baslik {
+            font-family: 'Cinzel', serif;
+            color: #ff1a1a;
+            font-size: clamp(20px, 5vw, 26px);
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            text-shadow: 0 0 10px rgba(255, 26, 26, 0.4);
+            cursor: pointer;
+        }
+
+        .kilit-alt {
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .kilit-alt span { color: #ff5555; font-weight: 600; }
+
+        .kilit-sayac {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .sayac-kutu-ozel {
+            background: rgba(20, 0, 0, 0.6);
+            border: 1px solid rgba(255, 26, 26, 0.4);
+            border-radius: 12px;
+            padding: 12px;
+            min-width: 75px;
+            box-shadow: inset 0 0 10px rgba(255,0,0,0.2);
+        }
+
+        .sayac-rakam {
+            font-family: monospace;
+            font-size: clamp(24px, 6vw, 32px);
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 8px rgba(255,255,255,0.3);
+        }
+
+        .sayac-etiket {
+            font-size: 10px;
+            color: #ff5555;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        .kilit-durum {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ff1a1a;
+            animation: kilitFlash 1s infinite alternate;
+        }
+        @keyframes kilitFlash { from { opacity: 0.4; } to { opacity: 1; } }
+
+        /* ============================================
+                   SİNEMATİK INTRO (AÇILINCA)
+           ============================================ */
+        #intro {
+            position: fixed;
+            inset: 0;
+            background:
+                linear-gradient(rgba(0,0,0,.85), rgba(0,0,0,.96)),
+                url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=1200&auto=format&fit=crop') center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 99999;
+            padding: 20px;
+            transition: opacity 1s ease;
+            display: none;
+        }
+
+        .intro-yazi {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(20px, 5.5vw, 36px);
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: introFade 2s forwards;
+            max-width: 90%;
+        }
+
+        .intro-yazi span { color: #ff3b3b; }
+
+        #devamBtn {
+            margin-top: 35px;
+            padding: 14px 36px;
+            border: none;
+            border-radius: 100px;
+            background: linear-gradient(135deg, #ff0000, #700000);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+            box-shadow: 0 4px 20px rgba(255, 0, 0, 0.4);
+            width: 80%;
+            max-width: 250px;
+        }
+
+        #devamBtn:active { transform: scale(0.95); }
+        @keyframes introFade { to { opacity: 1; transform: translateY(0); } }
+
+        /* ARKA PLAN EFEKTLERİ */
+        .yagmur {
+            position: fixed;
+            width: 2px;
+            height: 100px;
+            background: linear-gradient(transparent, rgba(255, 255, 255, .15));
+            animation: rain linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        @keyframes rain { from { transform: translateY(-100px); } to { transform: translateY(110vh); } }
+
+        .nokta {
+            position: fixed;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            animation: noktaParla 3s ease-in-out infinite alternate;
+        }
+        @keyframes noktaParla { 0% { opacity: 0.1; transform: scale(0.5); } 100% { opacity: 0.7; transform: scale(1.3); } }
+
+        .ag {
+            position: fixed;
+            border: 1px solid rgba(255, 0, 0, 0.04);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            animation: agDon 30s linear infinite;
+        }
+        .ag:nth-child(1) { width: 250px; height: 250px; top: -5%; left: -5%; }
+        .ag:nth-child(2) { width: 350px; height: 350px; top: 10%; right: -10%; }
+        .ag:nth-child(3) { width: 450px; height: 450px; bottom: -10%; left: -5%; }
+        @keyframes agDon { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* ============================================
+                   ANA KUTU - TELEFON UYUMLU
+           ============================================ */
+        .kutu {
+            position: relative;
+            z-index: 10;
+            background: rgba(10, 10, 10, 0.94);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(204, 0, 0, 0.2);
+            border-radius: 24px;
+            padding: 25px 20px;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 0 60px rgba(255, 0, 0, 0.05);
+            transition: 0.4s ease;
+            display: none;
+        }
+
+        .kutu.acik {
+            border-color: rgba(255, 50, 50, 0.4);
+            box-shadow: 0 0 80px rgba(255, 0, 0, 0.12);
+        }
+
+        .kutu h1 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(20px, 5vw, 24px);
+            color: #e60000;
+            margin-bottom: 6px;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .kutu .alt-baslik {
+            color: #999;
+            font-size: 13px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(204, 0, 0, 0.08);
+            line-height: 1.5;
+        }
+
+        #muzikKontrol {
+            display: none;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255,0,0,0.2);
+            color: white;
+            padding: 6px 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 14px;
+            z-index: 20;
+        }
+
+        /* CANLI SAYAÇ ALANI */
+        .sayac-kutu {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 170, 0, 0.15);
+            padding: 10px;
+            border-radius: 12px;
+            margin: 10px 0;
+        }
+        .sayac-baslik { font-size: 11px; color: #ffaa00; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+        .sayac-zaman { font-family: monospace; font-size: 15px; font-weight: bold; color: #fff; }
+
+        /* ŞİFRE ALANI */
+        .sifre-grup { display: flex; flex-direction: column; gap: 14px; align-items: center; }
+        .sifre-grup.gizle { display: none; }
+        .sifre-grup input {
+            width: 85%; max-width: 280px; padding: 14px; font-size: 24px; text-align: center;
+            background: rgba(20, 20, 20, 0.8); border: 2px solid rgba(204, 0, 0, 0.25); border-radius: 50px;
+            color: #fff; outline: none; transition: 0.3s; letter-spacing: 8px; font-weight: bold;
+        }
+        .sifre-grup input:focus { border-color: #ff4444; box-shadow: 0 0 15px rgba(255, 0, 0, 0.2); }
+        .sifre-grup input::placeholder { color: #554; letter-spacing: 2px; font-size: 13px; font-weight: normal; }
+        .sifre-grup button {
+            padding: 14px 40px; font-size: 16px; font-weight: 600;
+            background: linear-gradient(135deg, #cc0000, #880000); color: #fff;
+            border: none; border-radius: 50px; cursor: pointer; width: 85%; max-width: 280px;
+        }
+        .sifre-hata { color: #ff4444; font-size: 13px; min-height: 18px; }
+
+        /* SEKME SİSTEMİ */
+        .sekmeler-menusu {
+            display: none;
+            justify-content: space-around;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 0, 0, 0.1);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            padding: 4px;
+        }
+        .sekme-btn {
+            background: transparent; border: none; color: #999; padding: 8px 6px;
+            font-size: 11px; font-weight: 500; cursor: pointer; border-radius: 8px;
+            transition: 0.3s; flex: 1; text-align: center;
+        }
+        .sekme-btn.aktif { background: rgba(204, 0, 0, 0.2); color: #ff4444; font-weight: 600; }
+        .sekme-icerik { display: none; animation: sekmeFading 0.4s ease; }
+        .sekme-icerik.aktif { display: block; }
+        @keyframes sekmeFading { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* PASTA VE MUM ÜFLEME */
+        #pastaAlani {
+            display: none; margin: 20px 0; padding: 15px;
+            background: rgba(255, 255, 255, 0.02); border-radius: 16px;
+            border: 1px dashed rgba(255, 68, 68, 0.3);
+        }
+        .pasta-talimat { font-size: 14px; color: #ffaa00; margin-bottom: 15px; font-weight: 500; }
+        .pasta { font-size: 55px; position: relative; display: inline-block; cursor: pointer; transition: transform 0.3s; }
+        .pasta:active { transform: scale(0.95); }
+        .mumlar { position: absolute; top: -22px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; }
+        .mum { font-size: 22px; transition: opacity 0.3s ease, transform 0.3s; position: relative; }
+        .mum.sonuk { opacity: 0.3; transform: translateY(5px); }
+        .alev { position: absolute; top: -6px; left: 4px; font-size: 10px; animation: alevKipirda 0.4s infinite alternate; }
+        .mum.sonuk .alev { display: none; }
+        @keyframes alevKipirda { 0% { transform: scale(1) rotate(-2deg); } 100% { transform: scale(1.1) rotate(3deg); opacity: 0.9; } }
+
+        /* POLAROID GALERİ (KAYDIRILABİLİR) */
+        .galeri {
+            display: flex; gap: 16px; overflow-x: auto; padding: 10px 5px 20px;
+            scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+        }
+        .galeri::-webkit-scrollbar { display: none; }
+        
+        .polaroid {
+            flex: 0 0 85%; scroll-snap-align: center; background: #f7f7f7;
+            padding: 12px 12px 20px 12px; border-radius: 4px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4); transform: rotate(var(--r, 0deg)); transition: 0.3s ease;
+        }
+        .polaroid img, .polaroid video {
+            width: 100%; height: auto; max-height: 240px; object-fit: contain;
+            background: #eaeaea; border: 1px solid #ddd; border-radius: 2px; display: block;
+        }
+        .polaroid-yazi {
+            font-family: 'Cinzel', serif; color: #222; font-size: 12px;
+            font-weight: bold; margin-top: 12px; text-align: center; line-height: 1.3;
+        }
+
+        /* SPOTIFY GÖRÜNÜMLÜ MÜZİK KUTUSU */
+        .spotify-kart {
+            background: #111; border: 1px solid #1db954; border-radius: 16px;
+            padding: 12px; display: flex; align-items: center; gap: 15px; margin: 15px 0; text-align: left;
+        }
+        .spotify-resim {
+            width: 55px; height: 55px; border-radius: 8px;
+            background: url('https://i.pinimg.com/736x/ba/e2/0a/bae20a29fa9dc409fd4de49e1944ae2e.jpg') center/cover;
+        }
+        .spotify-detay { flex: 1; }
+        .spotify-baslik { font-size: 14px; font-weight: 600; color: #fff; }
+        .spotify-sanatci { font-size: 12px; color: #1db954; }
+        .spotify-btn {
+            background: #1db954; border: none; width: 36px; height: 36px;
+            border-radius: 50%; color: #000; font-size: 16px; cursor: pointer;
+            display: flex; justify-content: center; align-items: center; font-weight: bold;
+        }
+
+        /* KARAKTER KARTLARI */
+        .karakter-kutu {
+            background: linear-gradient(135deg, #1c0000, #0a0a0a);
+            border: 1px solid #ff3333; border-radius: 16px; padding: 15px; margin: 15px 0;
+            text-align: left; box-shadow: 0 4px 15px rgba(255,0,0,0.2);
+        }
+        .karakter-baslik { font-family: 'Cinzel', serif; color: #ff3333; font-size: 16px; font-weight: bold; margin-bottom: 10px; border-bottom: 1px solid rgba(255,0,0,0.2); padding-bottom: 5px;}
+        .ozellik-satir { font-size: 13px; margin-bottom: 6px; color: #ddd; }
+        .ozellik-satir strong { color: #ffaa00; }
+
+        /* CHECKLIST */
+        .liste-kutusu { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,0,0,0.1); border-radius: 16px; padding: 15px; margin: 15px 0; text-align: left;}
+        .liste-baslik { font-family: 'Cinzel', serif; color: #ffaa00; font-size: 14px; margin-bottom: 10px; text-transform: uppercase;}
+        .liste-oge { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 13px; cursor: pointer;}
+        .liste-oge input { accent-color: #ff3333; width: 16px; height: 16px; }
+
+        /* 🎬 ENTEGRE YENİ VİDEO KUTUSU */
+        .video-konteyner {
+            background: rgba(20, 10, 10, 0.85); border: 1px solid #ff3333;
+            border-radius: 20px; padding: 15px; margin: 15px 0;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.15);
+        }
+        .video-konteyner video {
+            width: 100%; height: auto; max-height: 280px; border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1); display: block; background: #000;
+        }
+
+        /* OSCORP KASASI VE BUTONLAR */
+        .oscorp-kutu {
+            background: linear-gradient(145deg, #07120b, #020503); border: 2px solid #00ff66;
+            padding: 24px 18px; border-radius: 20px; margin: 20px 0; text-align: center;
+            box-shadow: 0 0 25px rgba(0, 255, 102, 0.2), inset 0 0 20px rgba(0, 255, 102, 0.1);
+            position: relative; overflow: hidden;
+        }
+        .oscorp-kutu::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 102, 0.1), transparent);
+            animation: siberTarama 3s linear infinite;
+        }
+        @keyframes siberTarama { 0% { left: -100%; } 100% { left: 150%; } }
+        
+        .oscorp-baslik { 
+            font-family: 'Cinzel', serif; color: #00ff66; font-size: 17px; font-weight: 700;
+            margin-bottom: 12px; letter-spacing: 2px; text-shadow: 0 0 10px rgba(0,255,102,0.4); 
+        }
+        .oscorp-kutu input {
+            width: 75%; max-width: 220px; padding: 12px; font-size: 20px; text-align: center;
+            background: #000; border: 1.5px solid #00ff66; border-radius: 10px; color: #00ff66; 
+            outline: none; margin-bottom: 14px; font-family: monospace; font-weight: bold; letter-spacing: 4px;
+            transition: 0.3s;
+        }
+        .oscorp-kutu input:focus { box-shadow: 0 0 15px rgba(0, 255, 102, 0.4); background: #030a05; }
+        .oscorp-kutu button {
+            padding: 12px 30px; font-size: 14px; background: #00ff66; color: #000; 
+            border: none; border-radius: 10px; cursor: pointer; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,255,102,0.3);
+        }
+
+        .bulusma-alani { display: none; margin-top: 15px; animation: sekmeFading 0.5s ease; }
+        .bulusma-metni { font-size: 14px; color: #fff; margin-bottom: 15px; line-height: 1.6; font-weight: 500; }
+        
+        /* KAÇAN HAYIR BUTONU */
+        .buton-grup { 
+            position: relative; height: 70px; display: flex; 
+            justify-content: center; align-items: center; gap: 25px; margin-top: 10px;
+        }
+        .btn-evet, .btn-hayir { padding: 12px 28px; font-size: 14px; font-weight: bold; border: none; border-radius: 50px; cursor: pointer; }
+        .btn-evet { background: linear-gradient(135deg, #00ff66, #009933); color: #000; box-shadow: 0 4px 15px rgba(0,255,102,0.4); z-index: 5;}
+        .btn-hayir { background: #ff3333; color: white; position: relative; z-index: 10; transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); will-change: transform; }
+
+        /* HATIRA DEFTERI / MESAJ KUTULARI */
+        .defter-kutusu { background: rgba(20,20,20,0.8); border: 1px dashed #ff4444; border-radius: 16px; padding: 15px; margin: 20px 0; }
+        .defter-baslik { font-family: 'Cinzel', serif; color: #ff4444; font-size: 15px; margin-bottom: 8px; }
+        .defter-kutusu textarea { width: 100%; height: 80px; background: #0a0a0a; border: 1px solid rgba(255,0,0,0.3); border-radius: 10px; padding: 10px; color: #fff; font-family: inherit; font-size: 13px; resize: none; outline: none;}
+        .defter-btn { margin-top: 10px; width: 100%; padding: 12px; background: linear-gradient(135deg, #ff1a1a, #990000); color: #fff; border: none; border-radius: 50px; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(255,0,0,0.3);}
+
+        /* İÇERİK METİNLERİ */
+        #mesaj { display: none; margin-top: 10px; color: #ddd; font-size: 14px; line-height: 1.7; }
+        #mesaj .buyuk { font-size: clamp(20px, 5.5vw, 26px); font-weight: 700; color: #ff4444; text-align: center; display: block; margin-bottom: 6px; font-family: 'Cinzel', serif; }
+        #mesaj .tarih { color: #ffaa00; font-weight: 600; text-align: center; display: block; font-size: 13px; margin-bottom: 8px; }
+        #mesaj .cicek-not { color: #ffaa88; padding: 10px; background: rgba(255, 0, 0, 0.04); border-radius: 15px; margin: 10px 0; text-align: center; font-size: 13px; }
+        #mesaj .mektup { background: rgba(255, 255, 255, 0.02); padding: 16px; border-radius: 16px; margin: 12px 0; border-left: 3px solid #cc0000; font-size: 13.5px; text-align: left; word-wrap: break-word; }
+        #mesaj .mektup strong { color: #ff6666; }
+        #mesaj .mektup .imza { text-align: right; color: #ffaa00; font-style: italic; margin-top: 12px; font-size: 14px; }
+        #mesaj .kucuk { font-size: 11px; color: #666; margin-top: 12px; text-align: center; }
+
+        .gorsel-kutu { display: none; margin: 12px 0; border-radius: 15px; overflow: hidden; border: 1px solid rgba(204, 0, 0, 0.15); }
+        .gorsel-kutu.goster { display: block; }
+        .gorsel-kutu img { width: 100%; height: auto; display: block; }
+
+        .ag-buton { display: none; margin: 14px auto 0; padding: 14px 36px; background: linear-gradient(135deg, #cc0000, #880000); border: none; border-radius: 50px; color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; width: 85%; max-width: 250px; }
+        .ag-buton.goster { display: inline-block; }
+
+        /* ANIMASYON PARÇACIKLARI */
+        .cicek { position: fixed; font-size: 22px; pointer-events: none; z-index: 999; animation: yagmurAkis 6s linear infinite; opacity: 0; }
+        @keyframes yagmurAkis { 0% { transform: translateY(-50px) rotate(0deg) scale(0.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(110vh) rotate(360deg) scale(1); opacity: 0; } }
+        .kalp { position: fixed; pointer-events: none; z-index: 999; animation: kalpUc 1.8s ease-out forwards; }
+        @keyframes kalpUc { 0% { transform: translate(0, 0) scale(0.2); opacity: 1; } 100% { transform: translate(var(--x), var(--y)) scale(1.2) rotate(360deg); opacity: 0; } }
+        .kalp-dokunma { position: fixed; pointer-events: none; z-index: 9999; animation: dokunma 1.4s ease-out forwards; }
+        @keyframes dokunma { 0% { transform: scale(0.3) translateY(0); opacity: 1; } 100% { transform: scale(1.4) translateY(-100px); opacity: 0; } }
+        .konfeti { position: fixed; pointer-events: none; z-index: 9998; animation: konfetiDus var(--sure) linear forwards; }
+        @keyframes konfetiDus { 0% { transform: translateY(-10px) rotate(0deg); opacity: 1; } 100% { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <!-- 🔒 SİBER TEMALI GERİ SAYIM KİLİT EKRANI -->
+    <div id="kilitEkrani">
+        <div class="kilit-panel">
+            <div class="kilit-baslik">⚠️ ERİŞİM ENGELLENDİ</div>
+            <div class="kilit-alt">
+                <span>OSCORP SECURE NETWORK</span><br>
+                Cansu Stacy adına korunan bu veritabanı şifrelenmiştir.<br>
+                Sistem kilidinin açılması bekleniyor...
+            </div>
+            
+            <div class="kilit-sayac">
+                <div class="sayac-kutu-ozel">
+                    <div class="sayac-rakam" id="kGuen">00</div>
+                    <div class="sayac-etiket">Gün</div>
+                </div>
+                <div class="sayac-kutu-ozel">
+                    <div class="sayac-rakam" id="kSaat">00</div>
+                    <div class="sayac-etiket">Saat</div>
+                </div>
+                <div class="sayac-kutu-ozel">
+                    <div class="sayac-rakam" id="kDakika">00</div>
+                    <div class="sayac-etiket">Dk</div>
+                </div>
+                <div class="sayac-kutu-ozel">
+                    <div class="sayac-rakam" id="kSaniye">00</div>
+                    <div class="sayac-etiket">Sn</div>
+                </div>
+            </div>
+
+            <div class="kilit-durum">🕸️ Protokol 07-07 Çalışıyor...</div>
+        </div>
+    </div>
+
+    <!-- INTRO EKRANI -->
+    <div id="intro">
+        <div class="intro-yazi">
+            Bir evrende <span>Peter</span>,<br>
+            Gwen’i kaybetti.<br><br>
+            Ama bu evrende biri seni gülümsetmek istiyor.
+        </div>
+        <button id="devamBtn" onclick="basla()">Devam Et 🕸️</button>
+    </div>
+
+    <div id="noktalar"></div>
+    <div class="ag"></div><div class="ag"></div><div class="ag"></div>
+
+    <!-- ANA KUTU -->
+    <div class="kutu" id="anaKutu">
+        <button id="muzikKontrol" onclick="muzikAcKapat()">🎵</button>
+
+        <h1 id="anaBaslik">🕷️ GİRİŞ ENGELLENDİ</h1>
+        <div class="alt-baslik" id="altBaslik">
+            <span>🔐</span> Erişim için <strong style="color:#ff6666;">Gwen Stacy</strong>'nin<br />
+            en sevdiği sayıyı girmelisin.
+        </div>
+
+        <!-- Şifre Giriş Alanı -->
+        <div class="sifre-grup" id="sifreGrup">
+            <input type="password" id="sifre" placeholder="4 haneli" maxlength="4" inputmode="numeric" />
+            <button onclick="kontrolEt()">🕸️ Ağı Çöz</button>
+            <div class="sifre-hata" id="hataMesaji"></div>
+        </div>
+
+        <!-- DİJİTAL PASTA ALANI -->
+        <div id="pastaAlani">
+            <div class="pasta-talimat">🎂 Mumları söndürmek için üzerine dokun! ✨</div>
+            <div class="pasta" onclick="mumUfle()">
+                <div class="mumlar">
+                    <div class="mum" id="mum1">🕯️<span class="alev">🔥</span></div>
+                    <div class="mum" id="mum2">🕯️<span class="alev">🔥</span></div>
+                    <div class="mum" id="mum3">🕯️<span class="alev">🔥</span></div>
+                </div>
+                🎂
+            </div>
+        </div>
+
+        <!-- SEKMELİ MENÜ ALANI -->
+        <div class="sekmeler-menusu" id="sekmelerMenusu">
+            <button class="sekme-btn aktif" onclick="sekmeDegistir(event, 'tabMektup')">💌 Mektup</button>
+            <button class="sekme-btn" onclick="sekmeDegistir(event, 'tabAlbum')">📸 Fotoğraflar</button>
+            <button class="sekme-btn" onclick="sekmeDegistir(event, 'tabMarvel')">🕷️ Marvel</button>
+            <button class="sekme-btn" onclick="sekmeDegistir(event, 'tabOzel')">🍿 Sana Özel</button>
+        </div>
+
+        <!-- İÇERİK ANA ALANI -->
+        <div id="mesaj">
+            
+            <!-- SEKME 1: MEKTUP -->
+            <div id="tabMektup" class="sekme-icerik aktif">
+                <span class="buyuk">✨ Hoş Geldin Cansu! 🎉</span>
+                <span class="tarih">Anlamlı Bir Sohbetin Başlangıcı...</span>
+                
+                <div class="sayac-kutu">
+                    <div class="sayac-baslik">⏱️ Sohbetimiz Başlayalı Beri Geçen Zaman</div>
+                    <div class="sayac-zaman" id="canliSayac">Hesaplanıyor...</div>
+                </div>
+
+                <!-- SPOTIFY MÜZİK KUTUSU -->
+                <div class="spotify-kart">
+                    <div class="spotify-resim"></div>
+                    <div class="spotify-detay">
+                        <div class="spotify-baslik">Cansu İçin Özel Şarkı</div>
+                        <div class="spotify-sanatci">Arka Plan Müziği Açık 🎵</div>
+                    </div>
+                    <button class="spotify-btn" onclick="muzikAcKapat()" id="spotBtn">▌▌</button>
+                </div>
+
+                <div class="cicek-not">🌸🌼 Şakayık ve papatyalar senin için açtı.</div>
+
+                <div class="mektup">
+                    <strong>Sevgili Cansu,</strong><br /><br />
+                    Öncelikle doğum günün kutlu olsun. 🥳<br /><br />
+                    Bu sürprizi yapmaktaki amacım ne abartmak ne de 25 günlük tanışıklığımıza aşırı anlamlar yüklemek. Sadece şunu söylemek istedim:<br /><br />
+                    <strong>Beni tanıdığın bu kısa sürede bile, senin özel biri olduğunu anlamak çok uzun sürmedi.</strong><br /><br />
+                    O 11 Haziran akşamı, saat 16:00'da başlayan sohbetimiz… Bilmiyorum farkında mısın ama o andan beri bir şeyler değişti. Belki senin için sıradan bir tanışmaydı, ama benim için öyle değildi.<br /><br />
+                    Senin Marvel hayranı olduğunu, The Amazing Spider-Man'e bayıldığını öğrendiğimde içimden "Bu kız tam benim kafamda" dedim. Sonra en sevdiğin çiçeklerin şakayık ve papatya olduğunu duyunca… İşte o an bu sürprizi yapmaya karar verdim.<br /><br />
+                    Çünkü <strong>doğum gününü unutmayacak kadar önemliydin</strong>, sıradan bir mesaj sana haksızlık olurdu.<br /><br />
+                    Belki bu mektup biraz cesur kaçıyor, biliyorum. Ama dürüst olmak gerekirse, seni tanıdığım ilk andan beri aklımda bir soru vardı:<br /><br />
+                    <strong>"Acaba bu kızla aramda neler olabilir?"</strong><br /><br />
+                    Bu sorunun cevabını henüz bilmiyorum. Ama öğrenmek istediğim kesin.<br /><br />
+                    O yüzden bu sürprizi yaptım. Ne bir beklentim var ne de bir şey dayatıyorum. Sadece şunu bilmeni istedim:<br /><br />
+                    <strong>Birisi seni düşünüyor, doğum gününü önemsiyor ve seni mutlu etmek için uğraşıyor.</strong><br /><br />
+                    Ve o birisi benim.<br /><br />
+                    Umarım bu küçük sürpriz yüzünü güldürmüştür.<br /><br />
+                    <div class="imza">İyi ki varsın, Cansu. "I love you 3000" ❤️<br />🕷️ <strong>Hasan</strong></div>
+                </div>
+
+                <!-- HATIRA DEFTERİ -->
+                <div class="defter-kutusu">
+                    <div class="defter-baslik">✉️ Hatıra Defterine Bir Not Bırak</div>
+                    <textarea id="defterMesaj" placeholder="Site hakkındaki hislerini buraya yazabilirsin Cansu... 😊"></textarea>
+                    <button class="defter-btn" id="defterBtn" onclick="notuGonderMail()">
+                        Anıyı Kasaya Kilitle 🔐
+                    </button>
+                </div>
+            </div>
+
+            <!-- SEKME 2: FOTOĞRAFLAR -->
+            <div id="tabAlbum" class="sekme-icerik">
+                <div class="galeri">
+                    <div class="polaroid" style="--r: -3deg;">
+                        <img src="https://files.catbox.moe/kvinsj.jpg" alt="Cansu 1">
+                        <div class="polaroid-yazi">Cansu ✨</div>
+                    </div>
+                    <div class="polaroid" style="--r: 2deg;">
+                        <img src="https://files.catbox.moe/0gch95.jpg" alt="Cansu 2">
+                        <div class="polaroid-yazi">En Güzel Detaylar 🌸</div>
+                    </div>
+                    <div class="polaroid" style="--r: -2deg;">
+                        <img src="https://files.catbox.moe/ft0ilj.jpg" alt="Cansu 3">
+                        <div class="polaroid-yazi">Gülüşün... 💫</div>
+                    </div>
+                    <div class="polaroid" style="--r: 3deg;">
+                        <img src="https://files.catbox.moe/nxkfjj.jpg" alt="Cansu 4">
+                        <div class="polaroid-yazi">Favori Anlardan 💖</div>
+                    </div>
+                    <div class="polaroid" style="--r: -1deg;">
+                        <img src="https://files.catbox.moe/617r52.jpg" alt="Cansu 5">
+                        <div class="polaroid-yazi">İyi ki Varsın 🦋</div>
+                    </div>
+                    <div class="polaroid" style="--r: 4deg;">
+                        <img src="https://files.catbox.moe/fz2jyd.jpg" alt="Cansu 6">
+                        <div class="polaroid-yazi">Her Haliyle Güzel ✨</div>
+                    </div>
+                    <div class="polaroid" style="--r: -3deg;">
+                        <img src="https://files.catbox.moe/wupsn5.jpg" alt="Cansu 7">
+                        <div class="polaroid-yazi">Günün En Güzeli ☀️</div>
+                    </div>
+                    <div class="polaroid" style="--r: 2deg;">
+                        <img src="https://files.catbox.moe/9hhw4q.jpg" alt="Cansu 8">
+                        <div class="polaroid-yazi">Unutulmaz Anlar ⚡</div>
+                    </div>
+                    <div class="polaroid" style="--r: 1deg;">
+                        <img src="https://files.catbox.moe/bmgpje.jpg" alt="Cansu 9">
+                        <div class="polaroid-yazi">Sonsuza Dek 🤍</div>
+                    </div>
+                </div>
+                
+                <!-- MARVEL KARAKTER KARTI -->
+                <div class="karakter-kutu">
+                    <div class="karakter-baslik">🎴 SÜPER KAHRAMAN PROFİLİ</div>
+                    <div class="ozellik-satir"><strong>Kahraman Adı:</strong> Cansu 🌟</div>
+                    <div class="ozellik-satir"><strong>Süper Gücü:</strong> Tek bir gülüşüyle bütün modu saniyeler içinde yükseltmek.</div>
+                    <div class="ozellik-satir"><strong>Zayıf Noktası:</strong> Şakayıklar, papatyalar ve Peter Parker duygusallığı.</div>
+                    <div class="ozellik-satir"><strong>Tehlike Seviyesi:</strong> %3000 (Gönül hırsızı kategorisinde tehlikeli) 😉</div>
+                </div>
+                <div class="kucuk">👈 Sağa/sola kaydırarak fotoğraflara bakabilirsin.</div>
+            </div>
+
+            <!-- SEKME 3: MARVEL KÖŞESİ -->
+            <div id="tabMarvel" class="sekme-icerik">
+                <div class="galeri">
+                    <div class="polaroid" style="--r: -2deg;">
+                        <img src="https://64.media.tumblr.com/ad50e70ef71c889b699a2d8f3ba39810/tumblr_pnx2oxZpnC1w9xjjt_400.jpg" alt="Andrew ve Gwen Mutlu">
+                        <div class="polaroid-yazi">Başka Bir Evrende... 🕸️<br><span style="font-size:10px; color:#666;">Bakışların anlamı...</span></div>
+                    </div>
+                    <div class="polaroid" style="--r: 3deg;">
+                        <video controls playsinline preload="metadata" poster="https://i.pinimg.com/736x/ba/e2/0a/bae20a29fa9dc409fd4de49e1944ae2e.jpg">
+                            <source src="https://files.catbox.moe/osh8fc.mp4" type="video/mp4">
+                        </video>
+                        <div class="polaroid-yazi">Seni 3000 Kez... 🤖<br><span style="font-size:10px; color:#666;">I love you 3000.</span></div>
+                    </div>
+                </div>
+
+                <!-- BİRLİKTE İZLEYECEKLERİMİZ LİSTESİ -->
+                <div class="liste-kutusu">
+                    <div class="liste-baslik">🍿 Birlikte İzlenecekler Listesi</div>
+                    <label class="liste-oge"><input type="checkbox"> The Amazing Spider-Man 1 & 2 🕸️</label>
+                    <label class="liste-oge"><input type="checkbox"> Avengers: Endgame (3000 Kez Hatırına) 🤖</label>
+                    <label class="liste-oge"><input type="checkbox"> Senin Seçeceğin Harika Bir Film 🎬</label>
+                </div>
+                
+                <!-- OSCORP GÜVENLİK KASASI -->
+                <div class="oscorp-kutu" id="oscorpKasa">
+                    <div class="oscorp-baslik">🗲 OSCORP GÜVENLİK KASASI</div>
+                    <div style="font-size:12px; color:#a0ffa0; margin-bottom:12px; line-height:1.5;">
+                        Kilitli içeriği açmak için mektupta geçen o çok özel <br/><strong>tanışma gününüzün ve ayınızın</strong> sayılarını gir. (Örn: 2405)
+                    </div>
+                    <input type="password" id="oscorpSifre" placeholder="••••" maxlength="4" inputmode="numeric">
+                    <br>
+                    <button onclick="oscorpKasaAc()">🔐 Dosyayı Çöz</button>
+                    <div id="oscorpChata" style="color:#ff3333; font-size:12px; margin-top:6px; min-height:15px; font-weight:500;"></div>
+                </div>
+
+                <!-- KAÇAN BUTONLAR ALANI -->
+                <div class="bulusma-alani" id="bulusmaAlani">
+                    <div class="bulusma-metni">
+                        🕷️ <strong>Peter Parker'dan Önemli Çağrı:</strong><br>
+                        "Madem bu listedeki filmleri seviyoruz, diyorum ki o zaman ilk maratonu gerçek hayatta, beraber güzel bir kahve eşliğinde yapalım mı? Ne dersin, bir gün belirleyelim mi?"
+                    </div>
+                    <div class="buton-grup">
+                        <button class="btn-evet" onclick="bulusmaEvet()">Evet, Seçelim! ☕</button>
+                        <button class="btn-hayir" id="hayirBtn" onmouseover="butonKac()" ontouchstart="butonKac()">Hayır 🕸️</button>
+                    </div>
+                </div>
+
+                <button class="ag-buton" id="agButon" onclick="agButonTikla()">🕷️ Ağa Takıl</button>
+                <div id="agSoruAlani"></div>
+            </div>
+
+            <!-- SEKME 4: 🎬 QUIZ YERINE TAMAMEN SANA ÖZEL VIDEO SEKMESI -->
+            <div id="tabOzel" class="sekme-icerik">
+                <div class="video-konteyner">
+                    <span class="buyuk" style="font-size:16px; margin-bottom:12px; color:#ffaa00;">🎬 Hasan'dan Cansu'ya Sürpriz Video!</span>
+                    
+                    <!-- NOT: src kısmındaki linke kendi videonun linkini (mp4 formatında) yapıştırabilirsin usta -->
+                    <video id="surprizVideo" controls playsinline preload="metadata">
+                        <source src="https://files.catbox.moe/c6uxdm.mp4" type="video/mp4">
+                        Tarayıcınız video oynatmayı desteklemiyor.
+                    </video>
+                    
+                    <div class="kucuk" style="margin-top:8px; color:#aaa;">Videoyu başlatarak Hasan'ın senin için bıraktığı sürprizi izleyebilirsin! ✨</div>
+                </div>
+
+                <!-- GELECEĞE NOT BIRAK ALANI -->
+                <div class="defter-kutusu" style="border-color: #ffaa00;">
+                    <div class="defter-baslik" style="color: #ffaa00;">🔮 Geleceğe Bir Not Bırak</div>
+                    <textarea id="gelecekNotu" placeholder="Buraya yazacağın her kelime doğrudan Hasan'ın kalbine ve mail kutusuna gidecek... Bize dair bir şeyler yazmak ister misin? 😊"></textarea>
+                    <button class="defter-btn" id="gelecekBtn" onclick="gelecegeNotGonder()" style="background: linear-gradient(135deg, #ffaa00, #996600);">
+                        Zaman Kapsülünü Gönder 🚀
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <audio id="arkaMuzik" loop preload="auto">
+        <source src="https://files.catbox.moe/0omoql.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        let sayacInterval;
+        let kilitInterval;
+        const formspreeEndpoint = "https://formspree.io/f/mkoljpwr";
+        
+        // 🔒 HEDEF KİLİT ZAMANI: 7 TEMMUZ 2026 GECE YARISI 00:00
+        const hedonistTarih = new Date("2026-07-07T00:00:00").getTime();
+
+        (function() {
+            for(let i=0; i<35; i++){
+                let y = document.createElement("div"); y.className = "yagmur";
+                y.style.left = Math.random() * 100 + "%"; y.style.animationDuration = (0.6 + Math.random()) + "s";
+                y.style.height = (50 + Math.random() * 80) + "px"; document.body.appendChild(y);
+            }
+            const container = document.getElementById('noktalar');
+            for (let i = 0; i < 25; i++) {
+                const n = document.createElement('div'); n.className = 'nokta';
+                n.style.left = Math.random() * 100 + '%'; n.style.top = Math.random() * 100 + '%';
+                n.style.animationDelay = Math.random() * 4 + 's';
+                n.style.width = (2 + Math.random() * 3) + 'px'; n.style.height = n.style.width;
+                container.appendChild(n);
+            }
+            kilitSisteminiYonet();
+            adminGirisKurulumu();
+        })();
+
+        function kilitSisteminiYonet() {
+            kilitInterval = setInterval(function() {
+                const simdi = new Date().getTime();
+                const kalanSure = hedonistTarih - simdi;
+                if (kalanSure <= 0) {
+                    kilidiAc();
+                } else {
+                    const gun = Math.floor(kalanSure / (1000 * 60 * 60 * 24));
+                    const saat = Math.floor((kalanSure % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const dakika = Math.floor((kalanSure % (1000 * 60 * 60)) / (1000 * 60));
+                    const saniye = Math.floor((kalanSure % (1000 * 60)) / 1000);
+                    document.getElementById('kGuen').textContent = String(gun).padStart(2, '0');
+                    document.getElementById('kSaat').textContent = String(saat).padStart(2, '0');
+                    document.getElementById('kDakika').textContent = String(dakika).padStart(2, '0');
+                    document.getElementById('kSaniye').textContent = String(saniye).padStart(2, '0');
+                }
+            }, 1000);
+        }
+
+        function kilidiAc() {
+            clearInterval(kilitInterval);
+            if(document.getElementById('kilitEkrani')) {
+                document.getElementById('kilitEkrani').style.transform = "translateY(-110vh)";
+                document.getElementById('kilitEkrani').style.opacity = "0";
+                setTimeout(() => {
+                    document.getElementById('kilitEkrani').remove();
+                    document.getElementById('intro').style.display = "flex";
+                    document.getElementById('anaKutu').style.display = "block";
+                }, 1000);
+            }
+        }
+
+        function adminGirisKurulumu() {
+            let basmaSayisi = 0;
+            document.querySelector('.kilit-baslik').addEventListener('click', function() {
+                basmaSayisi++;
+                if (basmaSayisi === 3) {
+                    basmaSayisi = 0;
+                    let adminSifre = prompt("Yönetici Girişi! Gizli bypass kodunu girin:");
+                    if (adminSifre === "1905") { kilidiAc(); } else { alert("Hatalı Protokol Kodu!"); }
+                }
+            });
+        }
+
+        function basla(){
+            document.getElementById("intro").style.opacity = "0";
+            setTimeout(() => { document.getElementById("intro").remove(); document.getElementById('sifre').focus(); }, 1000);
+            document.getElementById('arkaMuzik').play().catch(function() {});
+        }
+
+        function muzikAcKapat() {
+            const m = document.getElementById('arkaMuzik'); 
+            const b = document.getElementById('muzikKontrol');
+            const sb = document.getElementById('spotBtn');
+            if (m.paused) { 
+                m.play(); b.style.textDecoration = "none"; b.style.opacity = "1"; if(sb) sb.textContent = "▌▌";
+            } else { 
+                m.pause(); b.style.textDecoration = "line-through"; b.style.opacity = "0.6"; if(sb) sb.textContent = "▶";
+            }
+        }
+
+        function sayacBaslat() {
+            const tanismaTarihi = new Date("2026-06-11T16:00:00").getTime();
+            sayacInterval = setInterval(function() {
+                const fark = new Date().getTime() - tanismaTarihi;
+                const gun = Math.floor(fark / (1000 * 60 * 60 * 24));
+                const saat = Math.floor((fark % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const dakika = Math.floor((fark % (1000 * 60 * 60)) / (1000 * 60));
+                const saniye = Math.floor((fark % (1000 * 60)) / 1000);
+                const se = document.getElementById("canliSayac");
+                if(se) se.innerHTML = gun + " gün " + saat + "s " + dakika + "dk " + saniye + "sn";
+            }, 1000);
+        }
+
+        function cicekYagdir() {
+            const emojiler = ['🌸', '🌼', '❤️', '✨'];
+            for (let i = 0; i < 25; i++) {
+                let c = document.createElement('div'); c.className = 'cicek';
+                c.textContent = emojiler[Math.floor(Math.random() * emojiler.length)];
+                c.style.left = Math.random() * 100 + '%'; c.style.fontSize = (16 + Math.random() * 20) + 'px';
+                c.style.animationDuration = (3 + Math.random() * 3) + 's';
+                document.body.appendChild(c); setTimeout(() => c.remove(), 5000);
+            }
+        }
+
+        function kontrolEt() {
+            const girilen = document.getElementById('sifre').value.trim();
+            const hata = document.getElementById('hataMesaji');
+            if (girilen === '0707') {
+                hata.textContent = '';
+                document.getElementById('sifreGrup').classList.add('gizle');
+                document.getElementById('anaBaslik').textContent = "🎂 MUTLU YILLAR Cansu!";
+                document.getElementById('altBaslik').innerHTML = "Doğum günün kutlu olsun, iyi ki doğdun! 🎉";
+                document.getElementById('pastaAlani').style.display = "block";
+                if (navigator.vibrate) navigator.vibrate(150);
+            } else {
+                hata.textContent = '❌ Yanlış şifre!';
+                document.getElementById('sifre').value = '';
+                if (navigator.vibrate) navigator.vibrate(100);
+            }
+        }
+
+        function mumUfle() {
+            document.getElementById('mum1').classList.add('sonuk');
+            document.getElementById('mum2').classList.add('sonuk');
+            document.getElementById('mum3').classList.add('sonuk');
+            if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+            konfetiPatlat(); cicekYagdir();
+            setTimeout(() => {
+                document.getElementById('pastaAlani').style.opacity = "0";
+                setTimeout(() => {
+                    document.getElementById('pastaAlani').remove();
+                    document.getElementById('anaKutu').classList.add('acik');
+                    document.getElementById('sekmelerMenusu').style.display = "flex";
+                    document.getElementById('muzikKontrol').style.display = "block";
+                    document.getElementById('mesaj').style.display = "block";
+                    sayacBaslat();
+                }, 1000);
+            }, 600);
+        }
+
+        function sekmeDegistir(evt, sekmeId) {
+            const icerikler = document.getElementsByClassName("sekme-icerik");
+            for (let i = 0; i < icerikler.length; i++) { icerikler[i].classList.remove("aktif"); }
+            const butonlar = document.getElementsByClassName("sekme-btn");
+            for (let i = 0; i < butonlar.length; i++) { butonlar[i].classList.remove("aktif"); }
+            document.getElementById(sekmeId).classList.add("aktif");
+            evt.currentTarget.classList.add("aktif");
+            const videolar = document.getElementsByTagName('video');
+            for (let i = 0; i < videolar.length; i++) { videolar[i].pause(); }
+        }
+
+        function mailGonder(konu, veriPaketi) {
+            fetch(formspreeEndpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify(Object.assign({ _subject: konu, tarih: new Date().toLocaleString('tr-TR') }, veriPaketi))
+            }).catch(() => {});
+        }
+
+        function notuGonderMail() {
+            const metin = document.getElementById('defterMesaj').value.trim();
+            const btn = document.getElementById('defterBtn');
+            if(!metin) { alert('Lütfen önce bir not yaz Cansu! 😊'); return; }
+            btn.disabled = true; btn.textContent = "🔒 Kilitleniyor...";
+            fetch(formspreeEndpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify({
+                    _subject: "🕷️ Cansu'dan Yeni Bir Anı Notu Gönderildi!",
+                    cansununNotu: metin, tarih: new Date().toLocaleString('tr-TR')
+                })
+            }).then(() => {
+                konfetiPatlat(); btn.textContent = "Anı Kilitlendi! ❤️";
+                document.getElementById('defterMesaj').value = "";
+                alert('Notun güvenli bir şekilde ağa kilitlendi! 😉');
+            }).catch(() => {
+                btn.disabled = false; btn.textContent = "Anıyı Kasaya Kilitle 🔐";
+                alert('Küçük bir ağ hatası oldu, lütfen tekrar dene Cansu.');
+            });
+        }
+
+        /* 🔮 GELECEĞE NOT BIRAKMA FONKSİYONU */
+        function gelecegeNotGonder() {
+            const metin = document.getElementById('gelecekNotu').value.trim();
+            const btn = document.getElementById('gelecekBtn');
+            if(!metin) { alert('Lütfen boş bırakma Cansu, geleceğe ufak da olsa bir şeyler yaz... 😊'); return; }
+            btn.disabled = true; btn.textContent = "🚀 Zaman Kapsülü Uçuyor...";
+
+            fetch(formspreeEndpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify({
+                    _subject: "🔮 Cansu Geleceğe Not Bıraktı!",
+                    gelecekMektubu: metin, tarih: new Date().toLocaleString('tr-TR')
+                })
+            }).then(() => {
+                konfetiPatlat(); cicekYagdir();
+                btn.textContent = "Kapsül Gönderildi! ❤️";
+                document.getElementById('gelecekNotu').value = "";
+                alert('Zaman kapsülün başarıyla kilitlendi ve Hasan\'a uçuruldu! 🚀');
+            }).catch(() => {
+                btn.disabled = false; btn.textContent = "Zaman Kapsülünü Gönder 🚀";
+                alert('Ufak bir ağ hatası, lütfen tekrar dene.');
+            });
+        }
+
+        function gizliBildirimGonder() {
+            mailGonder("🚨 Cansu 'Hayır' Butonundan Kaçmaya Çalıştı!", {
+                mesaj: "Cansu 'Hayır' butonuna basmak istedi ama buton elinden kaçtı! 😉"
+            });
+        }
+
+        function bulusmaEvet() {
+            konfetiPatlat(); cicekYagdir();
+            mailGonder("☕ Cansu Buluşma Teklifini KABUL ETTİ!", {
+                durum: "Cansu 'Evet, Seçelim! ☕' butonuna tıkladı! Kahve planı onaylandı."
+            });
+            alert('Harika bir seçim! 🕷️ Peter Parker şu an çok mutlu. Bu kararını hemen Hasan\'a bildirmelisin! 😉');
+        }
+
+        function agButonTikla() {
+            const soruAlani = document.getElementById('agSoruAlani');
+            soruAlani.innerHTML = `
+                <br />
+                <div style="background:rgba(255,0,0,0.04); padding:16px; border-radius:16px; border:1px solid rgba(255,0,0,0.06); margin-top:10px; text-align:center; animation: sekmeFading 0.4s ease;">
+                    <strong style="color:#ffaa00; font-size:15px;">🕵️ SORU:</strong><br />
+                    <span style="color:#ddd; font-size:14px;">"Bir Spider-Man filmi izleseydik,<br />sen hangi karakter olurdun?"</span><br />
+                    <span style="font-size:11px; color:#666;">(Bunu yüz yüze konuşalım 😏)</span>
+                </div>
+                <div class="gorsel-kutu goster" style="animation: sekmeFading 0.4s ease;">
+                    <img src="https://wherethedogstarrages.wordpress.com/wp-content/uploads/2014/05/amazing-spider-man-peter-and-gwen.jpg" alt="Peter and Gwen" />
+                </div>
+            `;
+            document.getElementById('agButon').classList.remove('goster');
+            if (navigator.vibrate) navigator.vibrate(100);
+            mailGonder("🕸️ Cansu Son Soruyu Açtı!", { detay: "Cansu 'Ağa Takıl' butonuna bastı." });
+
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const k = document.createElement('div'); k.className = 'kalp';
+                    k.textContent = ['❤️', '🌸', '🌼', '💕'][Math.floor(Math.random() * 4)];
+                    k.style.left = (15 + Math.random() * 70) + '%'; k.style.top = (20 + Math.random() * 60) + '%';
+                    k.style.fontSize = (18 + Math.random() * 24) + 'px';
+                    k.style.setProperty('--x', (Math.random() * 200 - 100) + 'px');
+                    k.style.setProperty('--y', (Math.random() * -250 - 50) + 'px');
+                    document.body.appendChild(k); setTimeout(() => k.remove(), 1800);
+                }, i * 60);
+            }
+        }
+
+        function oscorpKasaAc() {
+            const kod = document.getElementById('oscorpSifre').value.trim();
+            const hata = document.getElementById('oscorpChata');
+            if(kod === '1106') {
+                document.getElementById('oscorpKasa').style.display = 'none';
+                document.getElementById('bulusmaAlani').style.display = 'block';
+                document.getElementById('agButon').classList.add('goster');
+                konfetiPatlat();
+            } else {
+                hata.textContent = '❌ Erişim Engellendi! İpucunu tekrar oku.';
+                document.getElementById('oscorpSifre').value = '';
+            }
+        }
+
+        function butonKac() {
+            if (!window.bildirimGonderildi) { gizliBildirimGonder(); window.bildirimGonderildi = true; }
+            const btn = document.getElementById('hayirBtn');
+            const aci = Math.random() * Math.PI * 2; const mesafe = 80 + Math.random() * 60;
+            const x = Math.cos(aci) * mesafe; const y = Math.sin(aci) * mesafe;
+            btn.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        function konfetiPatlat() {
+            const renkler = ['#ff0000', '#ffaa00', '#00ff00', '#00aaff', '#ff00ff', '#ffffff'];
+            for (let i = 0; i < 45; i++) {
+                setTimeout(() => {
+                    const k = document.createElement('div'); k.className = 'konfeti';
+                    k.style.left = Math.random() * 100 + '%'; k.style.top = '-10px';
+                    k.style.width = (4 + Math.random() * 6) + 'px'; k.style.height = (4 + Math.random() * 6) + 'px';
+                    k.style.background = renkler[Math.floor(Math.random() * renkler.length)];
+                    k.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                    k.style.setProperty('--sure', (2 + Math.random() * 2) + 's');
+                    document.body.appendChild(k); setTimeout(() => k.remove(), 4000);
+                }, i * 30);
+            }
+        }
+
+        document.addEventListener('touchstart', function(e) {
+            const touch = e.touches[0]; if (!touch) return;
+            const kalp = document.createElement('div'); kalp.className = 'kalp-dokunma';
+            kalp.textContent = ['❤️', '🌸', '🌼', '💖'][Math.floor(Math.random() * 4)];
+            kalp.style.left = (touch.clientX - 15) + 'px'; kalp.style.top = (touch.clientY - 15) + 'px';
+            kalp.style.fontSize = (20 + Math.random() * 20) + 'px';
+            document.body.appendChild(kalp); setTimeout(() => kalp.remove(), 1400);
+        }, { passive: true });
+
+        document.getElementById('sifre').addEventListener('keydown', function(e) { if (e.key === 'Enter') kontrolEt(); });
+    </script>
+</body>
+</html>
